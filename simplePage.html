@@ -1,0 +1,182 @@
+<html>
+<meta charset="UTF-8">
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+  <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+    //backgroundMask
+    let video;
+    let myBodyPix;
+    let segment;
+    //filter
+    let filterMode = 1;
+    let vScale = 2;
+
+    var particles = [];
+    var slider;
+
+    const options = {
+      "multiplier": 0.25,
+      "outputStride": 32, // 8, 16, or 32, default is 16
+      "segmentationThreshold": 0.5 // 0 - 1, defaults to 0.5 
+    };
+
+    function setup() {
+      textAlign(CENTER);
+      createCanvas(600, 400);
+      video = createCapture(VIDEO);
+      video.size(600, 400);
+      video.hide();
+      myBodyPix = ml5.bodyPix(video, options, modelReady);
+      //filter
+      pixelDensity(1);
+      //  video.size(width/vScale, height/vScale);
+      for (var i = 0; i < 200; i++) {
+        particles[i] = new Particle(random(width), random(height));
+      }
+      slider = createSlider(0, 255, 127);
+    }
+
+    function draw() {
+
+      // image(video, 0, 0);
+
+      //filter
+
+      // loadPixels();
+
+      // for (let i = 0; i < width; i += 1) {
+      //   for (let j = 0; j < height; j += 1) {
+      //     let colorFromVideo = video.get(i, j);
+      //     let index=4*(j*width+i);
+      //     pixelFilter(index,i,j);
+      //   }
+      // }
+
+      // updatePixels();
+      // tint(200,80);
+      // image(video,0,0,width,height);
+
+    }
+
+    function modelReady() {
+      console.log('model ready');
+      myBodyPix.segment(gotResults);
+    }
+
+    function gotResults(err, results) {
+      if (err) console.log(err);
+      if (results) {
+        // console.log(results);
+        segment = results.backgroundMask;
+
+        image(video, 0, 0, 600, 400);
+
+        //filter
+        // loadPixels();
+        // for (let i = 0; i < width; i += 1) {
+        //   for (let j = 0; j < height; j += 1) {
+        //     let colorFromVideo = video.get(i, j);
+        //     let index=4*(j*width+i);
+        //     pixelFilter(index,i,j);
+        //   }
+        // }
+
+        // updatePixels();
+
+        // tint(100,40);
+        // image(video,0,0,width,height);
+
+        //bubble particles
+        for (var i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].show();
+        }
+
+        //textBackground
+        textSize(30);
+        var textcol = video.get(width / 2, height / 2);
+        fill(textcol[0], textcol[1], textcol[2], slider.value());
+        text('不想加班 不想加班 不想加班 不想加班', random(0, 20), random(0, 5), width)
+        text('need sleep..need sleep..need sleep', random(0, 10), random(75, 85), width)
+        text('不想加班 不想加班 不想加班 不想加班', random(0, 20), random(135, 145), width)
+        text('need sleep..need sleep..need sleep', random(0, 10), random(195, 205), width)
+        text('不想加班 不想加班 不想加班 不想加班', random(0, 20), random(255, 265), width)
+
+        if (segment) image(segment, 0, 0, 600, 400);
+        myBodyPix.segment(gotResults);
+      }
+    }
+
+    //filter
+    function pixelFilter(index, i, j) {
+
+      if (filterMode === 1) {
+        pixels[index] = mouseX / 8;
+        pixels[index + 1] = i / 10;
+        pixels[index + 2] = i / 10 + j / 10;
+        pixels[index + 3] = 255;
+      }
+
+      if (filterMode === 2) {
+        pixels[index] = mouseY / 4;
+        pixels[index + 1] = j / 20;
+        pixels[index + 2] = i / 5 + j / 20;
+        pixels[index + 3] = 255;
+      }
+
+      if (filterMode === 3) {
+        pixels[index] = i / 10 + j / 10;
+        pixels[index + 1] = i / 10;
+        pixels[index + 2] = mouseX / 8;
+        pixels[index + 3] = 255;
+      }
+
+      if (filterMode === 4) {
+        pixels[index] = i / 20 + j / 20;
+        pixels[index + 1] = j / 10;
+        pixels[index + 2] = mouseX / 8;
+        pixels[index + 3] = 255;
+      }
+    }
+
+    function mouseClicked() {
+      let filterModes = ['1', '2', '3', '4'];
+      var filterMode = random(filterModes);
+      console.log(filterMode);
+    }
+
+    //bubble particles
+    function Particle(x, y) {
+      this.x = x;
+      this.y = y;
+      this.r = random(4, 32);
+
+      this.update = function () {
+        this.x += random(-10, 10);
+        this.y += random(-10, 10);
+
+        this.x = constrain(this.x, 0, width);
+        this.y = constrain(this.y, 0, height);
+      }
+
+      this.show = function () {
+        noStroke();
+        var px = floor(this.x / vScale);
+        var py = floor(this.y / vScale);
+        var col = video.get(px, py);
+        // console.log(col);
+        fill(col[0], col[1], col[2], slider.value());
+        ellipse(this.x, this.y, this.r, this.r);
+      }
+
+    }
+  </script>
+</body>
+
+</html>
