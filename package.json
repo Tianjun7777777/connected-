@@ -1,0 +1,20 @@
+{
+  "name": "connect2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nedb": "^1.8.0",
+    "parser": "^0.1.4",
+    "socket.io": "^3.1.1"
+  }
+}
