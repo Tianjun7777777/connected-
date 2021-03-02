@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>T</title>
+    <script type="text/javascript">
+      function fetchData(){
+        fetch('http://localhost:3000/data',{method:'GET'})
+        .then(function (response) {
+            return(response.json());
+        })
+        .then(function (datas) {
+          console.log(datas);
+          const addDivDom = document.getElementById('adddiv');
+          const resultDom = document.getElementById('result');
+
+          addDivDom.innerHTML='';
+          resultDom.innerHTML='';
+
+          for (var i = 0; i < datas.length; i++) {
+            const data = datas[i];
+
+            // color boxes:
+            const newDiv = document.createElement("DIV");
+            newDiv.innerText= data.text;
+            newDiv.style.backgroundColor = data.color;
+            newDiv.style.color = '#FFF';
+            newDiv.style.width = '128px';
+            addDivDom.appendChild(newDiv);
+
+            // result logs:
+            const newLog = document.createElement("LI");
+            newLog.innerText = `${(i+1)}. ` + JSON.stringify(data);
+            newLog.style.listStyle = 'none';
+            newLog.style.marginBottom = '4px';
+            resultDom.appendChild(newLog);
+          }
+        });
+      };
+
+      window.addEventListener('load', ()=>{
+        document.getElementById('submitButton').addEventListener('click',()=>{
+          // Get Input Data
+          const data = {
+            data: document.getElementById('textValue').value,
+            color: document.getElementById('colorValue').value
+          }
+
+          console.log(data);
+
+          // post data
+          fetch(
+            'http://localhost:3000/inputdata',{
+              method:'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(data)
+            })
+          .then(function(response){
+            return response.text();
+          })
+          .then(function(text){
+            console.log(text);
+          })
+        });
+      })
+    </script>
+  </head>
+  <body>
+    <div>
+      <label for="data">Enter some text and a color to post:</label>
+      <br/><br/>
+      <input id="textValue" value="say something">
+      <input id="colorValue" type="color">
+      <button id="submitButton">Submit</button>
+    </div>
+
+    <hr style="margin:20px 0px"/>
+
+    <div>
+      <label for="data">Pull data from my nedb storage:</label>
+      <br/><br/>
+      <button id='update' onclick='fetchData()'>update</button>
+
+      <p>Color Boxes:</p> 
+      <div id='adddiv'></div>
+
+      <p>Result Logs:</p>
+      <ul id='result' style='padding:0px;'></ul>
+    </div>
+  
+  </body>
+</html>
