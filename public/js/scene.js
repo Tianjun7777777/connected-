@@ -25,7 +25,7 @@ class Scene {
 
     //Utility
     this.width = window.innerWidth;
-    this.height = window.innerHeight - 100;
+    this.height = window.innerHeight * (9.0/16.0);
     this.pixelRatio = window.devicePixelRatio;
 
     //Add Player
@@ -55,23 +55,21 @@ class Scene {
     this.playerGroup.add(this.listener);
 
     //THREE WebGL renderer
-    this.renderer = new THREE.WebGLRenderer(
-      { antialiasing: true, }
-    );
+    this.renderer = new THREE.WebGLRenderer({ antialiasing: true });
     this.renderer.setClearColor(new THREE.Color("black"));
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(this.pixelRatio);
-    // add controls:
-    this.controls = new THREE.PlayerControls(this.camera, this.playerGroup);
 
     //Push the canvas to the DOM
     let domElement = document.getElementById("canvas-container");
     domElement.append(this.renderer.domElement);
+        // add controls:
+        this.controls = new THREE.PlayerControls(this.camera, this.playerGroup);
 
     //Setup event listeners for events and handle the states
     window.addEventListener("resize", (e) => this.onWindowResize(e), false);
-    window.addEventListener("keydown", (e) => this.onKeyDown(e), false);
-    window.addEventListener("keyup", (e) => this.onKeyUp(e), false);
+    // window.addEventListener("keydown", (e) => this.onKeyDown(e), false);
+    // window.addEventListener("keyup", (e) => this.onKeyUp(e), false);
 
     //text input
     document.getElementById('submitButton').addEventListener('click',()=>{
@@ -391,16 +389,16 @@ class Scene {
     this.renderer.setSize(this.width, this.height);
   }
 
-  // keystate functions from playercontrols
-  onKeyDown(event) {
-    event = event || window.event;
-    this.keyState[event.keyCode || event.which] = true;
-  }
+  // // keystate functions from playercontrols
+  // onKeyDown(event) {
+  //   event = event || window.event;
+  //   this.keyState[event.keyCode || event.which] = true;
+  // }
 
-  onKeyUp(event) {
-    event = event || window.event;
-    this.keyState[event.keyCode || event.which] = false;
-  }
+  // onKeyUp(event) {
+  //   event = event || window.event;
+  //   this.keyState[event.keyCode || event.which] = false;
+  // }
 }
 
 //////////////////////////////////////////////////////////////////////

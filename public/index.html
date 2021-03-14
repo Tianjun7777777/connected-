@@ -10,7 +10,6 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js" integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA==" crossorigin="anonymous"></script>
 	
-	<!-- <script src="js/libs/three.module.js"></script> -->
 	<script src="js/libs/three.min.js"></script>
 	<script src="js/libs/playerControls.js"></script>
 	<script src="js/libs/MTLLoader.js"></script>
@@ -33,6 +32,11 @@
 			border: 1em;
 			color: rgb(223, 223, 223);
 		}
+    .ui-container{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 20px 0px 20px;
+    }
 
 	</style>
 
@@ -43,25 +47,21 @@
 
 	<!-- WebGL context -->
 	<div id="canvas-container"></div>
-	<br/>
+
+	<div class='ui-container'>
 	<div > 
-		<input type="text" id="textValue" value="say something">
+		<input type="text" id="textValue" placeholder="say something">
 		<input id="colorValue" type="color">
 		<input type="button" id="submitButton" value="submit">
-
 	</div>
-
-	<br/>
 	<p style="color:beige">up/down arrow : move back and forth</p> 
 	<p style="color:beige">right/left arrow : change direction</p> 
 	<p style="color:beige">press key F : start floating!</p> 
 	<br/>
-
 	<input type="button" id="connect" value="connect"><br>
 	<div id="device" style="color:beige">no device yet</div>
 	<div id="data" style="color:beige">no data yet</div>
-	<br/>
-
+	</div>
 </body>
 
 </html>

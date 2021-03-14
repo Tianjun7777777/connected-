@@ -64,7 +64,22 @@ window.onload = async () => {
   // finally create the threejs scene
   console.log("Creating three.js scene...");
   glScene = new Scene(onPlayerMove);
+
+  handleUseInputValue(glScene);
 };
+
+const handleUseInputValue = (glScene) => {
+  glScene.controls.enabled = true;
+  const textValue = document.getElementById('textValue');
+  textValue.addEventListener('click',(event)=>{
+    glScene.controls.enabled = false;
+    event.target.focus();
+  });
+  document.getElementById('canvas-container').addEventListener('click',(event)=>{
+    glScene.controls.enabled = true;
+    textValue.blur();
+  });
+} 
 
 ////////////////////////////////////////////////////////////////////////////////
 // Local media stream setup

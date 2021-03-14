@@ -413,7 +413,9 @@ THREE.PlayerControls = function (camera, player, domElement) {
 
 	}
 
-	function onKeyDown(event) {
+	const onKeyDown = (event) => {
+		
+		if(!this.enabled){return;}
 
 		event = event || window.event;
 
@@ -421,7 +423,9 @@ THREE.PlayerControls = function (camera, player, domElement) {
 
 	}
 
-	function onKeyUp(event) {
+	const onKeyUp = (event) => {
+
+		if(!this.enabled){return;}
 
 		event = event || window.event;
 
