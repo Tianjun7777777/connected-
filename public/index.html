@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>
+		Rest of words
+	</title>
+
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js" integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA==" crossorigin="anonymous"></script>
+	
+	<script src="js/libs/three.min.js"></script>
+	<script src="js/libs/playerControls.js"></script>
+	<script src="js/libs/MTLLoader.js"></script>
+	<script src="js/libs/OBJLoader.js"></script>
+	<script src="js/libs/Water.js"></script>
+	<script src="js/libs/Sky.js"></script>
+	<script type="text/javascript" src="js/libs/dat.gui.min.js"></script>
+	
+	<script src="js/apiRequest.js"></script>
+	<script src="js/environment.js"></script>
+	<script src="js/scene.js"></script>
+	<script src="js/index.js"></script>
+
+	<style>
+		body {
+			overflow: hidden;
+		}
+		#info {
+			padding: 1em;
+			border: 1em;
+			color: rgb(223, 223, 223);
+		}
+    .ui-container{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 20px 0px 20px;
+    }
+
+	#video_container{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 20px 0px 20px;
+	}
+
+	</style>
+
+
+</head>
+
+<body style="background: black; margin: 0; padding: 0">
+
+	<!-- WebGL context -->
+	<div id="canvas-container"></div>
+
+	<div class='ui-container'>
+	<div > 
+		<input type="text" id="textValue" placeholder="say something">
+		<input id="colorValue" type="color" value="#ffffff">
+		<input type="button" id="submitButton" value="submit">
+	</div>
+	<p style="color:beige">up/down arrow : move back and forth</p> 
+	<p style="color:beige">right/left arrow : change direction</p> 
+	<p style="color:beige">press key F : start floating!</p> 
+	<br/>
+	<!-- <div > 
+		<input type="text" id="searchTextValue" placeholder="enter the keywords to search and click on the grey ball" onclick="this.style.width = (this.placeholder.length + 1)*6  + 'px';">
+		<input type="button" id="searchButton" value="search">
+	</div><br/> -->
+	<input type="button" id="connect" value="connect"><br>
+	<div id="device" style="color:beige">no device yet</div>
+	<div id="data" style="color:beige">no data yet</div>
+	</div>
+	<div id='video_container'></div>
+</body>
+
+</html>
